@@ -9,8 +9,9 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.release>25</maven.compiler.release>
         <lwjgl.version>3.4.1</lwjgl.version>
+        <tinylog.version>2.7.0</tinylog.version>
     </properties>
 
     <dependencyManagement>
@@ -72,6 +73,16 @@
     </profiles>
 
     <dependencies>
+        <dependency>
+            <groupId>org.tinylog</groupId>
+            <artifactId>tinylog-api</artifactId>
+            <version>${tinylog.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.tinylog</groupId>
+            <artifactId>tinylog-impl</artifactId>
+            <version>${tinylog.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.lwjgl</groupId>
             <artifactId>lwjgl</artifactId>
