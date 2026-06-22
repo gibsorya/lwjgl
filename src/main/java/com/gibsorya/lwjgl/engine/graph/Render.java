@@ -8,15 +8,20 @@ import com.gibsorya.lwjgl.engine.*;
 import com.gibsorya.lwjgl.engine.scene.*;
 
 public class Render {
+    private SceneRender sceneRender;
+
     public Render() {
         GL.createCapabilities();
+        sceneRender = new SceneRender();
     }
 
     public void cleanup() {
-
+        sceneRender.cleanup();
     }
 
     public void render(Window window, Scene scene) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glViewport(0, 0, window.getWidth(), window.getHeight());
+        sceneRender.render(scene);
     }
 }
