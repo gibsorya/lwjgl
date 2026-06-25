@@ -9,12 +9,14 @@ import com.gibsorya.lwjgl.engine.scene.*;
 
 public class SceneRender {
     private ShaderProgram shaderProgram;
+    private UniformsMap uniformsMap;
 
     public SceneRender() {
         List<ShaderProgram.ShaderModuleData> shaderModuleDataList = new ArrayList<>();
         shaderModuleDataList.add(new ShaderProgram.ShaderModuleData("resources/shaders/scene.vert", GL_VERTEX_SHADER));
         shaderModuleDataList.add(new ShaderProgram.ShaderModuleData("resources/shaders/scene.frag", GL_FRAGMENT_SHADER));
         shaderProgram = new ShaderProgram(shaderModuleDataList);
+        createUniforms();
     }
 
     public void cleanup() {
@@ -28,8 +30,15 @@ public class SceneRender {
             glDrawElements(GL_TRIANGLES, mesh.getNumVertices(), GL_UNSIGNED_INT, 0);
         });
 
+        uniformsMap.setUniform("transform", scene.getProjection().getTransform());
+
         glBindVertexArray(0);
 
         shaderProgram.unbind();
+    }
+
+    private void createUniforms() {
+        uniformsMap = new UniformsMap(shaderProgram.getProgramId());
+        uniformsMap.createUniform("transform");
     }
 }

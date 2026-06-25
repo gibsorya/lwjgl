@@ -12,6 +12,7 @@
         <maven.compiler.release>25</maven.compiler.release>
         <lwjgl.version>3.4.1</lwjgl.version>
         <tinylog.version>2.7.0</tinylog.version>
+        <joml.version>1.10.9</joml.version>
     </properties>
 
     <dependencyManagement>
@@ -73,6 +74,11 @@
     </profiles>
 
     <dependencies>
+        <dependency>
+            <groupId>org.joml</groupId>
+            <artifactId>joml</artifactId>
+            <version>${joml.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.tinylog</groupId>
             <artifactId>tinylog-api</artifactId>
