@@ -25,12 +25,20 @@ public class SceneRender {
 
     public void render(Scene scene) {
         shaderProgram.bind();
-        scene.getMeshMap().values().forEach(mesh -> {
-            glBindVertexArray(mesh.getVaoId());
-            glDrawElements(GL_TRIANGLES, mesh.getNumVertices(), GL_UNSIGNED_INT, 0);
-        });
 
         uniformsMap.setUniform("transform", scene.getProjection().getTransform());
+
+        Collection<Model> models = scene.getModelMap().values();
+        for(Model model : models) {
+            model.getMeshes().stream().forEach(mesh -> {
+                glBindVertexArray(mesh.getVaoId());
+                List<Entity> entities = model.getEntities();
+                for(Entity entity : entities) {
+                    uniformsMap.setUniform("modelMatrix", entity.getModelMatrix());
+                    glDrawElements(GL_TRIANGLES, mesh.getNumVertices(), GL_UNSIGNED_INT, 0);
+                }
+            });
+        }
 
         glBindVertexArray(0);
 
@@ -40,5 +48,6 @@ public class SceneRender {
     private void createUniforms() {
         uniformsMap = new UniformsMap(shaderProgram.getProgramId());
         uniformsMap.createUniform("transform");
+        uniformsMap.createUniform("modelMatrix");
     }
 }

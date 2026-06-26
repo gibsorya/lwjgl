@@ -32,7 +32,7 @@ public class Mesh {
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
         glBufferData(GL_ARRAY_BUFFER, positionsBuffer, GL_STATIC_DRAW);
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
 
         // COLOR VBO
         vboId = glGenBuffers();
