@@ -39,6 +39,6 @@ public class Scene {
     }
 
     public void resize(int width, int height) {
-        projection.updateTransform(width, height);
+        projection.updateProjection(width, height);
     }
 }

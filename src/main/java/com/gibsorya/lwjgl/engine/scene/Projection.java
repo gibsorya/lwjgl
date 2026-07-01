@@ -7,18 +7,18 @@ public class Projection {
     private static final float Z_FAR = 1000.0f;
     private static final float Z_NEAR = 0.01f;
 
-    private Matrix4f transform;
+    private Matrix4f projection;
 
     public Projection(int width, int height) {
-        transform = new Matrix4f();
-        updateTransform(width, height);
+        projection = new Matrix4f();
+        updateProjection(width, height);
     }
 
-    public void updateTransform(int width, int height) {
-        transform.setPerspective(FOV, (float) width / height, Z_NEAR, Z_FAR);
+    public void updateProjection(int width, int height) {
+        projection.setPerspective(FOV, (float) width / height, Z_NEAR, Z_FAR);
     }
 
-    public Matrix4f getTransform() {
-        return transform;
+    public Matrix4f getProjection() {
+        return projection;
     }
 }
