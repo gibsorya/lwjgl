@@ -7,11 +7,11 @@ import com.gibsorya.lwjgl.engine.scene.*;
 public class Model {
     private final String id;
     private List<Entity> entities;
-    private List<Mesh> meshes;
+    private List<Material> materials;
 
-    public Model(String id, List<Mesh> meshes) {
+    public Model(String id, List<Material> materials) {
         this.id = id;
-        this.meshes = meshes;
+        this.materials = materials;
         entities = new ArrayList<>();
     }
 
@@ -23,11 +23,11 @@ public class Model {
         return entities;
     }
 
-    public List<Mesh> getMeshes() {
-        return meshes;
+    public List<Material> getMaterials() {
+        return materials;
     }
 
     public void cleanup() {
-        meshes.forEach(Mesh::cleanup);
+        materials.forEach(Material::cleanup);
     }
 }

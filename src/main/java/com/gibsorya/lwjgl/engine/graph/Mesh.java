@@ -17,7 +17,7 @@ public class Mesh {
     private int vaoId;
     private List<Integer> vboIds;
 
-    public Mesh(float[] positions, float[] colors, int[] indices) {
+    public Mesh(float[] positions, float[] colors, float[] textureCoords, int[] indices) {
         this.numVertices = indices.length;
         vboIds = new ArrayList<>();
 
@@ -34,15 +34,29 @@ public class Mesh {
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * Float.BYTES, 0);
 
-        // COLOR VBO
-        vboId = glGenBuffers();
-        vboIds.add(vboId);
         FloatBuffer colorsBuffer = MemoryUtil.memCallocFloat(colors.length);
-        colorsBuffer.put(0, colors);
-        glBindBuffer(GL_ARRAY_BUFFER, vboId);
-        glBufferData(GL_ARRAY_BUFFER, colorsBuffer, GL_STATIC_DRAW);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
+        // COLOR VBO
+        if(colors.length > 0) {
+            vboId = glGenBuffers();
+            vboIds.add(vboId);
+            colorsBuffer.put(0, colors);
+            glBindBuffer(GL_ARRAY_BUFFER, vboId);
+            glBufferData(GL_ARRAY_BUFFER, colorsBuffer, GL_STATIC_DRAW);
+            glEnableVertexAttribArray(1);
+            glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
+        }
+
+        
+        if(textureCoords.length > 0) {
+            vboId = glGenBuffers();
+            vboIds.add(vboId);
+            FloatBuffer textureBuffer = MemoryUtil.memCallocFloat(textureCoords.length);
+            textureBuffer.put(0, textureCoords);
+            glBindBuffer(GL_ARRAY_BUFFER, vboId);
+            glBufferData(GL_ARRAY_BUFFER, textureBuffer, GL_STATIC_DRAW);
+            glEnableVertexAttribArray(2);
+            glVertexAttribPointer(2, 2, GL_FLOAT, false, 0, 0);
+        }
 
         // INDEX VBO
         vboId = glGenBuffers();
@@ -57,6 +71,7 @@ public class Mesh {
 
         MemoryUtil.memFree(positionsBuffer);
         MemoryUtil.memFree(colorsBuffer);
+        MemoryUtil.memFree(textureBuffer);
         MemoryUtil.memFree(indicesBuffer);
     }
 

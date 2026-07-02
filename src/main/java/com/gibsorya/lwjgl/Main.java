@@ -80,14 +80,14 @@ public class Main implements IAppLogic {
             0.5f, -0.5f, 0.5f
         };
         float[] colors = new float[]{
-            0.5f, 0.0f, 0.0f,
-            0.0f, 0.5f, 0.0f,
-            0.0f, 0.0f, 0.5f,
-            0.0f, 0.5f, 0.5f,
-            0.5f, 0.0f, 0.0f,
-            0.0f, 0.5f, 0.0f,
-            0.0f, 0.0f, 0.5f,
-            0.0f, 0.5f, 0.5f,
+            // 0.5f, 0.0f, 0.0f,
+            // 0.0f, 0.5f, 0.0f,
+            // 0.0f, 0.0f, 0.5f,
+            // 0.0f, 0.5f, 0.5f,
+            // 0.5f, 0.0f, 0.0f,
+            // 0.0f, 0.5f, 0.0f,
+            // 0.0f, 0.0f, 0.5f,
+            // 0.0f, 0.5f, 0.5f,
         };
 
         float[] textCoords = new float[]{
@@ -132,14 +132,19 @@ public class Main implements IAppLogic {
             // Back face
             4, 6, 7, 5, 4, 7,
         };
-        List<Mesh> meshList = new ArrayList<>();
-        Mesh mesh = new Mesh(positions, colors, indices);
-        meshList.add(mesh);
-        String cubeModelId = "cube-model";
-        Model model = new Model(cubeModelId, meshList);
+        Texture texture = scene.getTextureCache().createTexture("resources/models/cube.png");
+        Material material = new Material();
+        material.setTeturePath(texture.getTexturePath());
+        List<Material> materials = new ArrayList<>();
+        materials.add(material);
+
+
+        Mesh mesh = new Mesh(positions, colors, textCoords, indices);
+        material.getMeshList().add(mesh);
+        Model model = new Model("cube-model", materials);
         scene.addModel(model);
 
-        cubeEntity = new Entity("cube-entity", cubeModelId);
+        cubeEntity = new Entity("cube-entity", model.getId());
         cubeEntity.setPosition(0, 0, -2);
         scene.addEntity(cubeEntity);
     }
